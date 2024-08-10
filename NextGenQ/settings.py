@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-hp&p3!nw$ueh%25=tkxu9-p^b4^l4^m7piu7$8386hvixj8i-)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*",
+    "https://karthik11.pythonanywhere.com/",
+    "karthik11.pythonanywhere.com",
+    ]
 
 
 # Application definition
@@ -133,13 +137,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = 'NextGenQ.asgi.application'
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = "mail.thaagam.email"
-EMAIL_PORT = 587
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = "office@acustomsong.com"
-EMAIL_HOST_PASSWORD = "6FOEnk{}#jcc"
-EMAIL_PORT = 587
-EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL="office@acustomsong.com"
