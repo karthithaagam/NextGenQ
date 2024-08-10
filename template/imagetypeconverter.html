@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload with Drag & Drop</title>
+      <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <style>
+        .upload-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .dropzone {
+            border: 2px dashed #007bff;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropzone input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container mt-5">
+        <h2 class="mb-4">Upload Your Images</h2>
+
+        {% if error_message %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error_message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <form id="uploadForm" action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="dropzone" id="dropzone">
+                <p>Drag & drop your images here or click to select files</p>
+                <input type="file" name="files" id="fileInput" accept="image/*" multiple>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="format" class="form-label">Select Output Format</label>
+                <select name="format" id="format" class="form-select">
+                    <option value="JPEG">JPEG</option>
+                    <option value="PNG">PNG</option>
+                    <option value="GIF">GIF</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="size" class="form-label">Desired Size</label>
+                <input type="number" name="size" id="size" class="form-control" placeholder="Enter size">
+            </div>
+
+            <div class="mb-3">
+                <label for="size_unit" class="form-label">Size Unit</label>
+                <select name="size_unit" id="size_unit" class="form-select">
+                    <option value="KB">KB</option>
+                    <option value="MB">MB</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Convert Images</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+
+    dropzone.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        fileInput.files = e.dataTransfer.files;
+        updateDropzoneText();
+    });
+
+    fileInput.addEventListener('change', updateDropzoneText);
+
+    uploadBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    function updateDropzoneText() {
+        const files = fileInput.files;
+        const dropzoneText = dropzone.querySelector('p');
+
+        if (files.length > 0) {
+            dropzoneText.textContent = `${files.length} file(s) selected`;
+        } else {
+            dropzoneText.textContent = 'Drag & drop your images here or click to select files';
+        }
+    }
+</script>
+
+</body>
+</html>

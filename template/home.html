@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .hero-image {
+            background-image: url("https://source.unsplash.com/1600x900/?technology,future");
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        .hero-text {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgb(0, 0, 0);
+        }
+        .service-section {
+            padding: 40px 0;
+            background-color: #f4f4f4;
+        }
+        .footer {
+            padding: 10px;
+            text-align: center;
+            background: #222;
+            color: white;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        .service {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="title">
+                <h1>Website Title</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-icon" id="menu-icon">&#9776;</div>
+        </nav>
+    </header>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 style="color: black;">Welcome to Our Tech World</h1>
+            {% if user.is_authenticated %}
+                <h2>Hello, {{ user.first_name }}!</h2>
+                <a href="{% url 'portfolio' %}" class="btn btn-primary btn-lg">Portfolio</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary btn-lg">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-secondary btn-lg">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="service-section container">
+        <div class="row">
+            <div class="col-md-6 service">
+                <h3>Web Development</h3>
+                <p>Explore our state-of-the-art solutions tailored to elevate your online presence.</p>
+            </div>
+            <div class="col-md-6 service">
+                <h3>AI Technology</h3>
+                <p>Drive innovation with our cutting-edge AI services that redefine efficiency.</p>
+            </div>
+            <div class="col-md-6 service">
+                <h3>Model Training</h3>
+                <p>Custom AI model training services to cater to unique business needs.</p>
+            </div>
+            <div class="col-md-6 service">
+                <h3>Freelancing</h3>
+                <p>Connect with top freelancers through our comprehensive platform designed for versatility.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Your Company Name. All Rights Reserved.</p>
+    </div>
+     <script>
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

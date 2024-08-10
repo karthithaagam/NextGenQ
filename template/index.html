@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <script>
+        var socket = new WebSocket('ws://127.0.0.1:8001/ws/some_path/');
+
+        socket.onmessage = function(e) {
+            console.log('Message received: ', e.data);
+        };
+
+        socket.onopen = function(e) {
+            console.log('Connection opened');
+            socket.send(JSON.stringify({'message': 'Hello WebSocket!'}));
+        };
+
+        socket.onclose = function(e) {
+            console.log('Connection closed');
+        };
+
+        socket.onerror = function(e) {
+            console.log('Error occurred: ', e);
+        };
+    </script>
+</body>
+</html>
